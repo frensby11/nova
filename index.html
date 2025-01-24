@@ -24,6 +24,22 @@
             background: linear-gradient(135deg, var(--soft-white) 0%, var(--subtle-gray) 100%);
             color: var(--luxury-black);
         }
+        .floating-title {
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating-title:hover {
+            animation-play-state: paused;
+            transform: scale(1.05);
+        }
+
 
         .parallax-bg {
             position: fixed;
@@ -146,7 +162,7 @@
     <div class="parallax-bg"></div>
 
     <div class="header dynamic-element">
-        <h1>Nova Studio</h1>
+        <h1 class="floating-title">Nova Studio</h1>
         <p>Nos especializamos en fotografía cubana contemporánea</p>
         <p>Nos adaptamos a nuevos estilos y nuevas formas del arte visual</p>
     </div>
@@ -184,7 +200,7 @@
     <div class="zoom-gallery">
         <div class="zoom-item dynamic-element">
             <img src="img/photo-5.jpg" alt="Zoom Gallery">
-        </div>
+    </div>
         <div class="zoom-item dynamic-element">
             <img src="img/photo-6.jpg" alt="Zoom Gallery">
         </div>
@@ -195,6 +211,37 @@
             <img src="img/photo-8.jpg" alt="Zoom Gallery">
         </div>
     </div>
+
+    <div class="interactive-sections">
+        <div class="photo-section dynamic-element">
+            <img src="img/photo-2.jpg" alt="Photography Style">
+            <div class="photo-overlay">
+                <div class="overlay-content">
+                    <h3>Retratos</h3>
+                    <p>Capturando la esencia</p>
+                </div>
+            </div>
+        </div>
+        <div class="photo-section dynamic-element">
+            <img src="img/photo-3.jpg" alt="Photography Technique">
+            <div class="photo-overlay">
+                <div class="overlay-content">
+                    <h3>Paisajes</h3>
+                    <p>Momentos eternos</p>
+                </div>
+            </div>
+        </div>
+        <div class="photo-section dynamic-element">
+            <img src="img/photo-4.jpg" alt="Photography Art">
+            <div class="photo-overlay">
+                <div class="overlay-content">
+                    <h3>Arte Contemporáneo</h3>
+                    <p>Nuevas perspectivas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         window.addEventListener('scroll', () => {
