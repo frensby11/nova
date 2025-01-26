@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova Studio Gallery</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
     <style>
         :root {
             --soft-white: #F5F5F5;
@@ -20,11 +22,17 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
+        body, html {
+            font-family: 'Poppins', sans-serif; 
             background: linear-gradient(135deg, var(--soft-white) 0%, var(--subtle-gray) 100%);
             color: var(--luxury-black);
-        }
+            overscroll-behavior-y: contain;
+            background-color: rgba(230, 210, 181, 0.699);
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;        }
+
         .floating-title {
             animation: float 3s ease-in-out infinite;
             display: inline-block;
@@ -40,7 +48,6 @@
             animation-play-state: paused;
             transform: scale(1.05);
         }
-
 
         .parallax-bg {
             position: fixed;
@@ -59,10 +66,9 @@
         .header {
             text-align: center;
             padding: 40px 20px;
-            background-color: rgba(235, 214, 183, 0.822);
-            box-shadow: #2C3E50;
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-color: rgba(230, 210, 181, 0.5);
         }
 
         .interactive-sections {
@@ -123,6 +129,52 @@
             text-align: center;
         }
 
+        .gallery-trigger {
+            border: 1px solid white;
+            color: white;
+            padding: 8px 15px;
+            margin-top: 10px;
+            border-radius: 20px;
+            display: none;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .photo-section:hover .gallery-trigger {
+            display: block;
+        }
+
+        #fullscreen-gallery {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #fullscreen-gallery .gallery-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+        }
+
         .zoom-gallery {
             display: flex;
             overflow-x: scroll;
@@ -139,7 +191,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
         }
-
         .zoom-item:hover {
             transform: scale(1.1);
         }
@@ -160,6 +211,78 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .contact-button {
+            width: 46%;
+            bottom: 20px;
+            margin-bottom: 0px;
+            margin-left: 50%;
+            right: 20px;
+            background-color: var(--pale-gold);
+            color: var(--luxury-black);
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .contact-button:hover {
+            transform: scale(1.1);
+            background-color: #D3B789;
+        }
+
+        /* Contact Modal Styles */
+        #contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(230, 210, 181, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .contact-modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .contact-modal-content h2 {
+            margin-bottom: 20px;
+            color: var(--luxury-black);
+        }
+
+        .contact-info {
+            margin: 20px 0;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--luxury-black);
+        }
     </style>
 </head>
 <body>
@@ -167,35 +290,40 @@
 
     <div class="header dynamic-element">
         <h1 class="floating-title">Nova Studio</h1>
-        <p>Nos especializamos en fotografía cubana contemporánea</p>
-        <p>Nos adaptamos a nuevos estilos y nuevas formas del arte visual</p>
+        <p class="text">Nos especializamos en fotografía cubana contemporánea</p>
+        <p class="text">Nos adaptamos a nuevos estilos y nuevas formas del arte visual</p>
     </div>
 
     <div class="interactive-sections">
-        <div class="photo-section dynamic-element">
-            <img src="img/photo-2.jpg" alt="Photography Style">
+        <div class="photo-section dynamic-element" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+            <img src="img/photo-2.jpg" alt="Retratos">
             <div class="photo-overlay">
                 <div class="overlay-content">
                     <h3>Retratos</h3>
                     <p>Capturando la esencia</p>
+                    <div class="gallery-trigger">Galería</div>
                 </div>
             </div>
         </div>
-        <div class="photo-section dynamic-element">
-            <img src="img/photo-3.jpg" alt="Photography Technique">
+        
+        <div class="photo-section dynamic-element" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+            <img src="img/photo-3.jpg" alt="Paisajes">
             <div class="photo-overlay">
                 <div class="overlay-content">
                     <h3>Paisajes</h3>
                     <p>Momentos eternos</p>
+                    <div class="gallery-trigger">Galería</div>
                 </div>
             </div>
         </div>
-        <div class="photo-section dynamic-element">
-            <img src="img/photo-4.jpg" alt="Photography Art">
+
+        <div class="photo-section dynamic-element" data-aos="fade-left" data-aos-duration="1000">
+            <img src="img/photo-4.jpg" alt="Arte Contemporáneo">
             <div class="photo-overlay">
                 <div class="overlay-content">
                     <h3>Arte Contemporáneo</h3>
                     <p>Nuevas perspectivas</p>
+                    <div class="gallery-trigger">Galería</div>
                 </div>
             </div>
         </div>
@@ -204,48 +332,51 @@
     <div class="zoom-gallery">
         <div class="zoom-item dynamic-element">
             <img src="img/photo-5.jpg" alt="Zoom Gallery">
-    </div>
+        </div>
         <div class="zoom-item dynamic-element">
             <img src="img/photo-6.jpg" alt="Zoom Gallery">
         </div>
-        <div class="zoom-item dynamic-element">
-            <img src="img/photo-7.jpg" alt="Zoom Gallery">
-        </div>
-        <div class="zoom-item dynamic-element">
-            <img src="img/photo-8.jpg" alt="Zoom Gallery">
-        </div>
     </div>
 
-    <div class="interactive-sections">
-        <div class="photo-section dynamic-element">
-            <img src="img/photo-2.jpg" alt="Photography Style">
-            <div class="photo-overlay">
-                <div class="overlay-content">
-                    <h3>Retratos</h3>
-                    <p>Capturando la esencia</p>
-                </div>
-            </div>
+    <div id="fullscreen-gallery">
+        <div class="gallery-nav">
+            <span id="prev-image"></span>
+            <span id="next-image"></span>
         </div>
-        <div class="photo-section dynamic-element">
-            <img src="img/photo-3.jpg" alt="Photography Technique">
-            <div class="photo-overlay">
-                <div class="overlay-content">
-                    <h3>Paisajes</h3>
-                    <p>Momentos eternos</p>
-                </div>
-            </div>
-        </div>
-        <div class="photo-section dynamic-element">
-            <img src="img/photo-4.jpg" alt="Photography Art">
-            <div class="photo-overlay">
-                <div class="overlay-content">
-                    <h3>Arte Contemporáneo</h3>
-                    <p>Nuevas perspectivas</p>
-                </div>
+        <img class="gallery-image" src="" alt="Fullscreen Gallery">
+    </div>
+    <div class="contact-button" id="contact-trigger">Contáctanos</div>
+    <div class="contact-button-space"></div>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal">
+        <div class="contact-modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>Contacta Nova Studio</h2>
+            <div class="contact-info">
+                <p><strong>Teléfono:</strong> +53 00000000</p>
+                <p><strong>Email:</strong> contacto@novastudio.cu</p>
+                <p><strong>Dirección:</strong> Calle 23, No. 456, Vedado</p>
+                <p><strong>Redes Sociales:</strong></p>
+                <p>Instagram: @novastudio_cuba</p>
+                <p>Facebook: Nova Studio Fotografía</p>
             </div>
         </div>
     </div>
 
+    <script>
+        AOS.init({
+            // Determina si la animación se ejecuta una sola vez (false) o cada vez que el elemento entra en vista (true)
+            once: false,
+            // Distancia en píxeles desde el borde inferior de la ventana donde la animación comenzará
+            offset: 300,
+            // Duración de la animación en milisegundos
+            duration: 500,
+            // Tipo de aceleración de la animación (suave al inicio y al final)
+            easing: 'ease-in-out'
+        });
+    </script>
+    
 
     <script>
         window.addEventListener('scroll', () => {
@@ -270,8 +401,98 @@
             dynamicElements.forEach(element => {
                 observer.observe(element);
             });
-        });
+
+            // Galería móvil
+            const galleryTriggers = document.querySelectorAll('.gallery-trigger');
+            const fullscreenGallery = document.getElementById('fullscreen-gallery');
+            const galleryImage = fullscreenGallery.querySelector('.gallery-image');
+            const prevButton = document.getElementById('prev-image');
+            const nextButton = document.getElementById('next-image');
+
+            const images = [
+                'img/photo-2.jpg', 
+                'img/photo-3.jpg', 
+                'img/photo-4.jpg', 
+                'img/photo-5.jpg', 
+                'img/photo-6.jpg',
+                'img/photo-7.jpg',
+                'img/photo-8.jpg',
+                'img/photo-9.jpg',
+                'img/photo-10.jpg'
+            ];
+            let currentImageIndex = 0;
+
+            function openFullscreenGallery(imageUrl) {
+                currentImageIndex = images.indexOf(imageUrl);
+                fullscreenGallery.style.display = 'flex';
+                galleryImage.src = imageUrl;
+            }
+
+            function closeFullscreenGallery() {
+                fullscreenGallery.style.display = 'none';
+            }
+
+            function nextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                galleryImage.src = images[currentImageIndex];
+            }
+
+            function prevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                galleryImage.src = images[currentImageIndex];
+            }
+
+            // Eventos táctiles para deslizamiento
+            let touchStartX = 0;
+            fullscreenGallery.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+            });
+
+            fullscreenGallery.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].clientX;
+                if (touchStartX - touchEndX > 50) {
+                    nextImage();
+                } else if (touchEndX - touchStartX > 50) {
+                    prevImage();
+                }
+            });
+
+            galleryTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    // redirirgir a la pagina de rostros.html
+                    window.location.href = 'rostros.html';
+                });
+            });
+
+            fullscreenGallery.addEventListener('click', closeFullscreenGallery);
+            prevButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                prevImage();
+            });
+            nextButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                nextImage();
+            });
+            });
+            document.addEventListener('DOMContentLoaded', () => {
+                const contactTrigger = document.getElementById('contact-trigger');
+                const contactModal = document.getElementById('contact-modal');
+                const closeModal = document.getElementById('close-modal');
+    
+                contactTrigger.addEventListener('click', () => {
+                    contactModal.style.display = 'flex';
+                });
+    
+                closeModal.addEventListener('click', () => {
+                    contactModal.style.display = 'none';
+                });
+    
+                contactModal.addEventListener('click', (e) => {
+                    if (e.target === contactModal) {
+                        contactModal.style.display = 'none';
+                    }
+                });
+            });
     </script>
 </body>
 </html>
-
