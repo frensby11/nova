@@ -1,499 +1,406 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Studio Gallery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+    <title>Nova Studio | Fotografía Profesional</title>
     <style>
-        :root {
-            --soft-white: #F5F5F5;
-            --pale-gold: #E6D2B5;
-            --subtle-gray: #E0E0E0;
-            --luxury-black: #2C3E50;
-        }
-
+        /* Existing styles remain the same until nav-menu */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body, html {
-            font-family: 'Poppins', sans-serif; 
-            background: linear-gradient(135deg, var(--soft-white) 0%, var(--subtle-gray) 100%);
-            color: var(--luxury-black);
-            overscroll-behavior-y: contain;
-            background-color: rgba(230, 210, 181, 0.699);
-            min-height: 100vh;
-            width: 100%;
+        body {
+            background-color: #000;
+            color: #f5f5f7;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.15;
             overflow-x: hidden;
-            position: relative;        }
-
-        .floating-title {
-            animation: float 3s ease-in-out infinite;
-            display: inline-block;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .floating-title:hover {
-            animation-play-state: paused;
-            transform: scale(1.05);
-        }
-
-        .parallax-bg {
+        .apple-header {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: 
-                linear-gradient(rgba(230, 210, 181, 0.2), rgba(230, 210, 181, 0.2)),
-                url('img/photo-1.jpg') no-repeat center center;
-            background-size: cover;
-            opacity: 0.3;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
         }
 
-        .header {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            color: #f5f5f7;
+            text-decoration: none;
+        }
+
+        /* Modified nav-menu styles for better mobile support */
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 300;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            opacity: 0.8;
+        }
+
+        /* Mobile menu button styles */
+        .menu-trigger {
+            display: none;
+            background: none;
+            border: none;
+            color: #f5f5f7;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 2000;
+        }
+
+        /* Rest of the existing styles remain the same */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 40px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            background-color: rgba(230, 210, 181, 0.5);
+            padding-top: 80px;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1554080353-a576cf803bda') center/cover;
         }
 
-        .interactive-sections {
+        .hero-content {
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            line-height: 1.05;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #86868b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .photo-section {
-            background: rgba(255,255,255,0.8);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+        .portfolio-item {
             position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: #1a1a1a;
         }
 
-        .photo-section:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        .portfolio-item:hover {
+            transform: scale(1.03);
         }
 
-        .photo-section img {
+        .portfolio-item img {
             width: 100%;
-            height: 300px;
+            height: 500px;
             object-fit: cover;
-            transition: transform 0.4s ease;
+            display: block;
         }
 
-        .photo-section:hover img {
-            transform: scale(1.1);
-        }
-
-        .photo-overlay {
+        .item-caption {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(0,0,0,0.6);
-            overflow: hidden;
-            width: 100%;
-            height: 0;
-            transition: 0.5s ease;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
         }
 
-        .photo-section:hover .photo-overlay {
-            height: 100%;
+        .caption-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
         }
 
-        .overlay-content {
-            color: white;
-            font-size: 20px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .caption-detail {
+            font-size: 0.9rem;
+            color: #86868b;
+        }
+
+        .services-section {
+            padding: 8rem 2rem;
+            background: #111;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .service-card {
             text-align: center;
-        }
-
-        .gallery-trigger {
-            border: 1px solid white;
-            color: white;
-            padding: 8px 15px;
-            margin-top: 10px;
-            border-radius: 20px;
-            display: none;
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-
-        .photo-section:hover .gallery-trigger {
-            display: block;
-        }
-
-        #fullscreen-gallery {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        #fullscreen-gallery .gallery-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            color: white;
-            font-size: 30px;
-        }
-
-        .zoom-gallery {
-            display: flex;
-            overflow-x: scroll;
-            padding: 20px;
-            gap: 20px;
-        }
-
-        .zoom-item {
-            flex: 0 0 auto;
-            width: 200px;
-            height: 200px;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+            border-radius: 18px;
+            background: #1a1a1a;
             transition: transform 0.3s ease;
         }
-        .zoom-item:hover {
-            transform: scale(1.1);
+
+        .service-card:hover {
+            transform: translateY(-10px);
         }
 
-        .zoom-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #86868b;
         }
 
-        .dynamic-element {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s, transform 1s;
-        }
-
-        .dynamic-element.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .contact-button {
-            position: fixed;
-            width: 46%;
-            bottom: 20px;
-            margin-bottom: 0px;
-            margin-left: 50%;
-            right: 20px;
-            background-color: var(--pale-gold);
-            color: var(--luxury-black);
-            padding: 15px 30px;
-            border-radius: 50px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .service-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
             font-weight: 500;
         }
-        .contact-button:hover {
-            transform: scale(1.1);
-            background-color: #D3B789;
+
+        .service-description {
+            color: #86868b;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
 
-        /* Contact Modal Styles */
-        #contact-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(230, 210, 181, 0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease-out;
+        .contact-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            background: #000;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .apple-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #0071e3;
+            color: #fff;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #0071e3;
+        }
+
+        .apple-button:hover {
+            background: #0077ED;
+            transform: scale(1.05);
+        }
+
+        /* Modified mobile styles */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                padding: 4rem 1rem;
+            }
+            
+            .menu-trigger {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                padding: 2rem;
+                z-index: 1500;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .nav-menu a {
+                font-size: 1.2rem;
+                padding: 1rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .contact-modal-content {
-            background-color: white;
-            padding: 40px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        .animate-apple {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
         }
 
-        .contact-modal-content h2 {
-            margin-bottom: 20px;
-            color: var(--luxury-black);
-        }
-
-        .contact-info {
-            margin: 20px 0;
-        }
-
-        .contact-info p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 30px;
-            cursor: pointer;
-            color: var(--luxury-black);
-        }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
-    <div class="parallax-bg"></div>
+    <header class="apple-header">
+        <nav class="nav-container">
+            <a href="#" class="logo">NOVA STUDIO</a>
+            <button class="menu-trigger">☰</button>
+            <div class="nav-menu">
+                <a href="#portfolio">Portfolio</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+        </nav>
+    </header>
 
-    <div class="header dynamic-element">
-        <h1 class="floating-title">Nova Studio</h1>
-        <p class="text">Nos especializamos en fotografía cubana contemporánea</p>
-        <p class="text">Nos adaptamos a nuevos estilos y nuevas formas del arte visual</p>
-    </div>
+    <section class="hero-section">
+        <div class="hero-content animate-apple">
+            <h1 class="hero-title">Fotografía que redefine lo posible</h1>
+            <p class="hero-subtitle">Capturando momentos con precisión profesional y arte visionario.</p>
+        </div>
+    </section>
 
-    <div class="interactive-sections">
-        <div class="photo-section dynamic-element" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-            <img src="img/photo-2.jpg" alt="Retratos">
-            <div class="photo-overlay">
-                <div class="overlay-content">
-                    <h3>Retratos</h3>
-                    <p>Capturando la esencia</p>
-                    <div class="gallery-trigger">Galería</div>
-                </div>
+    <section id="portfolio" class="portfolio-grid">
+        <div class="portfolio-item animate-apple">
+            <img src="https://images.unsplash.com/photo-1554080353-a576cf803bda" alt="Fotografía profesional">
+            <div class="item-caption">
+                <div class="caption-title">Retrato Pro</div>
+                <div class="caption-detail">Sesiones en estudio con iluminación controlada</div>
             </div>
         </div>
         
-        <div class="photo-section dynamic-element" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
-            <img src="img/photo-3.jpg" alt="Paisajes">
-            <div class="photo-overlay">
-                <div class="overlay-content">
-                    <h3>Paisajes</h3>
-                    <p>Momentos eternos</p>
-                    <div class="gallery-trigger">Galería</div>
-                </div>
+        <div class="portfolio-item animate-apple delay-1">
+            <img src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb" alt="Fotografía de bodas">
+            <div class="item-caption">
+                <div class="caption-title">Bodas Épicas</div>
+                <div class="caption-detail">Cobertura completa con storytelling visual</div>
             </div>
         </div>
-
-        <div class="photo-section dynamic-element" data-aos="fade-left" data-aos-duration="1000">
-            <img src="img/photo-4.jpg" alt="Arte Contemporáneo">
-            <div class="photo-overlay">
-                <div class="overlay-content">
-                    <h3>Arte Contemporáneo</h3>
-                    <p>Nuevas perspectivas</p>
-                    <div class="gallery-trigger">Galería</div>
-                </div>
+        
+        <div class="portfolio-item animate-apple delay-2">
+            <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf" alt="Fotografía de productos">
+            <div class="item-caption">
+                <div class="caption-title">Productos</div>
+                <div class="caption-detail">Fotografía comercial de alto impacto</div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="zoom-gallery">
-        <div class="zoom-item dynamic-element">
-            <img src="img/photo-5.jpg" alt="Zoom Gallery">
-        </div>
-        <div class="zoom-item dynamic-element">
-            <img src="img/photo-6.jpg" alt="Zoom Gallery">
-        </div>
-    </div>
-
-    <div id="fullscreen-gallery">
-        <div class="gallery-nav">
-            <span id="prev-image"></span>
-            <span id="next-image"></span>
-        </div>
-        <img class="gallery-image" src="" alt="Fullscreen Gallery">
-    </div>
-    <div class="contact-button" id="contact-trigger">Contáctanos</div>
-    <div class="contact-button-space"></div>
-
-    <!-- Contact Modal -->
-    <div id="contact-modal">
-        <div class="contact-modal-content">
-            <span class="close-modal" id="close-modal">&times;</span>
-            <h2>Contacta Nova Studio</h2>
-            <div class="contact-info">
-                <p><strong>Teléfono:</strong> +53 00000000</p>
-                <p><strong>Email:</strong> contacto@novastudio.cu</p>
-                <p><strong>Dirección:</strong> Calle 23, No. 456, Vedado</p>
-                <p><strong>Redes Sociales:</strong></p>
-                <p>Instagram: @novastudio_cuba</p>
-                <p>Facebook: Nova Studio Fotografía</p>
+    <section id="servicios" class="services-section">
+        <div class="services-container">
+            <div class="service-card animate-apple">
+                <div class="service-icon">📸</div>
+                <h3 class="service-title">Sesiones Creativas</h3>
+                <p class="service-description">Dirección artística y producción completa para sesiones editoriales</p>
             </div>
-        </div>
-    </div>
-
-    <script>
-        AOS.init({
-            // Determina si la animación se ejecuta una sola vez (false) o cada vez que el elemento entra en vista (true)
-            once: false,
-            // Distancia en píxeles desde el borde inferior de la ventana donde la animación comenzará
-            offset: 300,
-            // Duración de la animación en milisegundos
-            duration: 500,
-            // Tipo de aceleración de la animación (suave al inicio y al final)
-            easing: 'ease-in-out'
-        });
-    </script>
-    
-
-    <script>
-        window.addEventListener('scroll', () => {
-            const parallaxBg = document.querySelector('.parallax-bg');
-            let scrollPosition = window.pageYOffset;
-            parallaxBg.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const dynamicElements = document.querySelectorAll('.dynamic-element');
             
-            const observerOptions = { threshold: 0.1 };
+            <div class="service-card animate-apple delay-1">
+                <div class="service-icon">💍</div>
+                <h3 class="service-title">Bodas & Eventos</h3>
+                <p class="service-description">Cobertura completa con entrega premium de álbumes físicos y digitales</p>
+            </div>
+            
+            <div class="service-card animate-apple delay-2">
+                <div class="service-icon">🖼️</div>
+                <h3 class="service-title">Postproducción</h3>
+                <p class="service-description">Retoque profesional y edición creativa con las últimas tecnologías</p>
+            </div>
+        </div>
+    </section>
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
+    <section id="contacto" class="contact-section">
+        <h2 class="contact-title animate-apple">Listos para crear juntos</h2>
+        <a href="mailto:hola@novastudio.com" class="apple-button animate-apple delay-1">Contactar ahora</a>
+    </section>
 
-            dynamicElements.forEach(element => {
-                observer.observe(element);
-            });
-
-            // Galería móvil
-            const galleryTriggers = document.querySelectorAll('.gallery-trigger');
-            const fullscreenGallery = document.getElementById('fullscreen-gallery');
-            const galleryImage = fullscreenGallery.querySelector('.gallery-image');
-            const prevButton = document.getElementById('prev-image');
-            const nextButton = document.getElementById('next-image');
-
-            const images = [
-                'img/photo-2.jpg', 
-                'img/photo-3.jpg', 
-                'img/photo-4.jpg', 
-                'img/photo-5.jpg', 
-                'img/photo-6.jpg',
-                'img/photo-7.jpg',
-                'img/photo-8.jpg',
-                'img/photo-9.jpg',
-                'img/photo-10.jpg'
-            ];
-            let currentImageIndex = 0;
-
-            function openFullscreenGallery(imageUrl) {
-                currentImageIndex = images.indexOf(imageUrl);
-                fullscreenGallery.style.display = 'flex';
-                galleryImage.src = imageUrl;
-            }
-
-            function closeFullscreenGallery() {
-                fullscreenGallery.style.display = 'none';
-            }
-
-            function nextImage() {
-                currentImageIndex = (currentImageIndex + 1) % images.length;
-                galleryImage.src = images[currentImageIndex];
-            }
-
-            function prevImage() {
-                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-                galleryImage.src = images[currentImageIndex];
-            }
-
-            // Eventos táctiles para deslizamiento
-            let touchStartX = 0;
-            fullscreenGallery.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
-            });
-
-            fullscreenGallery.addEventListener('touchend', (e) => {
-                const touchEndX = e.changedTouches[0].clientX;
-                if (touchStartX - touchEndX > 50) {
-                    nextImage();
-                } else if (touchEndX - touchStartX > 50) {
-                    prevImage();
+    <script>
+        // Improved scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
                 }
             });
+        });
 
-            galleryTriggers.forEach(trigger => {
-                trigger.addEventListener('click', (e) => {
-                    // redirirgir a la pagina de rostros.html
-                    window.location.href = 'rostros.html';
-                });
-            });
+        document.querySelectorAll('.animate-apple').forEach(el => {
+            observer.observe(el);
+        });
 
-            fullscreenGallery.addEventListener('click', closeFullscreenGallery);
-            prevButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                prevImage();
+        // Improved mobile menu functionality
+        const menuTrigger = document.querySelector('.menu-trigger');
+        const navMenu = document.querySelector('.nav-menu');
+        const menuLinks = document.querySelectorAll('.nav-menu a');
+
+        menuTrigger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuTrigger.textContent = navMenu.classList.contains('active') ? '×' : '☰';
+        });
+
+        // Close menu when clicking a link
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuTrigger.textContent = '☰';
             });
-            nextButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                nextImage();
-            });
-            });
-            document.addEventListener('DOMContentLoaded', () => {
-                const contactTrigger = document.getElementById('contact-trigger');
-                const contactModal = document.getElementById('contact-modal');
-                const closeModal = document.getElementById('close-modal');
-    
-                contactTrigger.addEventListener('click', () => {
-                    contactModal.style.display = 'flex';
-                });
-    
-                closeModal.addEventListener('click', () => {
-                    contactModal.style.display = 'none';
-                });
-    
-                contactModal.addEventListener('click', (e) => {
-                    if (e.target === contactModal) {
-                        contactModal.style.display = 'none';
-                    }
-                });
-            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !menuTrigger.contains(e.target) && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuTrigger.textContent = '☰';
+            }
+        });
     </script>
 </body>
 </html>
+
